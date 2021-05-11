@@ -16,9 +16,16 @@ In motioneye turn on "Run a command" under "Motion Notifications"
 set the command as "./MotioneyeMqtt/RunMotioneyeMQTT ON [Camera Name]" 
 i.e. if you're using your front door camera:
 ```
-./MotioneyeMqtt/RunMotioneyeMQTT ON Front_Door
+./OnMotionScript/OnMotion-MotioneyeMQTT/OnMotion-MotioneyeMQTT ON Front_Door
 ```
 set the end command as 
 ```
-./MotioneyeMqtt/RunMotioneyeMQTT OFF Front_Door
+./OnMotionScript/OnMotion-MotioneyeMQTT/OnMotion-MotioneyeMQTT OFF Front_Door
 ```
+
+
+You need to set the other script to run at startup and from the root directory (so it uses the config file). You run the second script by typing (no arguments needed):
+```
+ResultProcessScript/ResultProcess-MotioneyeMQTT/ResultProcess-MotioneyeMQTT
+```
+This scans the result from HA and either deletes or renames the associated image and video file.
