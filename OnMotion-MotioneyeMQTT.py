@@ -54,7 +54,7 @@ def ExitProgram():
     
 #Set rootfolder
 try:
-    os.chdir(source_dir)
+    os.chdir(str(source_dir))
     Log("Root Folder: " + str(source_dir) + "\n \n ")
 except OSError:
     Log("Path not found")
@@ -130,7 +130,7 @@ client.publish(mqttTopic + "/" + camera + "/sensor",mqttMessage)
 Log("Published '"+ mqttMessage +"' to '"+ mqttTopic + "'")
 
 #Publish Picture if motion on
-if (mqttMessage == "ON"):
+if (mqttMessage == "OFF"):
     imageSearch =  camera + "/*.jpg" # Any file in camera folder ending in .jpg
     list_of_files = glob.glob(imageSearch)
     if list_of_files:
