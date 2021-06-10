@@ -20,7 +20,10 @@ def CreateConfig():
         configFile.write("################################################# \n#                CONFIGURATION                  # \n################################################# \n\nmqttBroker: \nmqttClientName: \nmqttUsername: \nmqttPassword: \n\n#Only change if you used a different MQTT topic for your motion events/pictures, \n#Don't set to specific camera locations, we will insert those with an argument. \nmqttTopic: motioncameras \n")
        
 #Get current path and set root folder
-source_path = Path(os.path.dirname(sys.argv[0])).resolve()
+if getattr( sys, 'frozen', False ) :
+    source_path = Path(os.path.dirname(sys.executable)).resolve()
+else:
+    source_path = Path(os.path.dirname(sys.argv[0])).resolve()
 source_dir = source_path.parent
 
 def signal_handler(signal, frame):
@@ -141,7 +144,7 @@ try:
     Log("Root Folder: " + str(source_dir) + "\n \n ")
 except OSError:
     Log("Path not found")
-    Log("Root directory: " + os.path.dirname() + "\n \n")
+    ExitProgram()
     
 
 #Connect to Broker
