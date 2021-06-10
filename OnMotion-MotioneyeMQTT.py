@@ -17,10 +17,7 @@ global mqttTopic
 #Get current path and set root folder
 source_path = Path(os.path.dirname(sys.argv[0])).resolve()
 source_dir = source_path.parent
-try:
-    os.chdir(source_dir)
-except OSError:
-    Log("Path not found")
+
 
 def CreateConfig():
     with open("config.yaml", "w") as configFile:
@@ -39,6 +36,7 @@ def Log(newmsg):
         Logtext = Logtext + str(newmsg) + "\n"
 def WriteToLog():
     #Write to log on exit
+    Log("\n \n" + "Logfile created in: " + str(source_dir) + "/log1.txt")
     logfile = open("log1.txt", "w")
     logfile.write(Logtext)
     logfile.close()
@@ -51,7 +49,13 @@ def ExitProgram():
     sys.exit()
     
     
-    
+#Set rootfolder
+try:
+    os.chdir(source_dir)
+    Log("Root Folder: " + str(source_dir) + "\n \n ")
+except OSError:
+    Log("Path not found")
+    Log("Root directory: " + os.path.dirname() + "\n \n")
     
     
 # On Message Function
@@ -127,6 +131,7 @@ if (mqttMessage == "ON"):
     imageSearch =  camera + "/*.jpg" # Any file in camera folder ending in .jpg
     list_of_files = glob.glob(imageSearch)
     if list_of_files:
+        latest_file = ""
         latest_file = max(list_of_files, key=os.path.getctime)
         Log("Image File: " + latest_file)
         image = open(latest_file, "rb")
