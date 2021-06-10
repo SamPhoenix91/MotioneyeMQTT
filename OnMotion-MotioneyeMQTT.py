@@ -5,6 +5,7 @@ import os
 import sys
 import yaml
 from pathlib import Path
+from datetime import date
 
 ## CONFIGURATION
 
@@ -131,7 +132,9 @@ Log("Published '"+ mqttMessage +"' to '"+ mqttTopic + "'")
 
 #Publish Picture if motion on
 if (mqttMessage == "OFF"):
-    imageSearch =  camera + "/*.jpg" # Any file in camera folder ending in .jpg
+    datetoday = date.today()
+    datetoday = datetoday.strftime("%Y-%m-%d")
+    imageSearch =  camera + "/" + datetoday + "/*.jpg" # Any file in camera folder ending in .jpg
     list_of_files = glob.glob(imageSearch)
     if list_of_files:
         latest_file = ""
