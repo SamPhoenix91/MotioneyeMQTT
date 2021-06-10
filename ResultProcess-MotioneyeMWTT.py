@@ -22,10 +22,6 @@ def CreateConfig():
 #Get current path and set root folder
 source_path = Path(os.path.dirname(sys.argv[0])).resolve()
 source_dir = source_path.parent
-try:
-    os.chdir(source_dir)
-except OSError:
-    Log("Path not found")
 
 def signal_handler(signal, frame):
   ExitProgram()
@@ -39,12 +35,10 @@ def Log(newmsg):
         Logtext = Logtext + str(newmsg) + "\n"
 def WriteToLog():
     #Write to log on exit
-    Log("Logfile in :" + str(source_dir))
+    Log("\n \n " + "Logfile created in: " + str(source_dir))
     logfile = open("log2.txt", "w")
     logfile.write(Logtext)
     logfile.close()
-
-Log(source_dir)
     
 #Quit
 def ExitProgram():
@@ -139,6 +133,16 @@ except FileNotFoundError:
     Log("Please enter your details into the config file")
     CreateConfig()
     ExitProgram()
+
+
+#Set rootfolder
+try:
+    os.chdir(source_dir)
+    Log("Root Folder: " + str(source_dir) + "\n \n ")
+except OSError:
+    Log("Path not found")
+    Log("Root directory: " + os.path.dirname() + "\n \n")
+    
 
 #Connect to Broker
 client = mqtt.Client(mqttClientName)
