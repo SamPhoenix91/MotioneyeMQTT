@@ -15,7 +15,10 @@ global mqttPassword
 global mqttTopic
 
 #Get current path and set root folder
-source_path = Path(os.path.dirname(sys.argv[0])).resolve()
+if getattr( sys, 'frozen', False ) :
+    source_path = Path(os.path.dirname(sys.executable)).resolve()
+else:
+    source_path = Path(os.path.dirname(sys.argv[0])).resolve()
 source_dir = source_path.parent
 
 
